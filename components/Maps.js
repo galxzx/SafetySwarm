@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
 export default class SwarmMap extends Component {
 
   render() {
-    debugger
     console.log('props', this.props)
     const latitude = this.props.currentPosition.coords.latitude
     const longitude = this.props.currentPosition.coords.longitude
@@ -67,16 +66,16 @@ export default class SwarmMap extends Component {
             }}
             key={this.props.currentPosition.timestamp}
         >
-        {
-          // <Marker coordinate={currentCoord}></Marker>
-          // {this.props.alerts.map(alert => {
-          //   return (
-          //    <Marker key={alert.timestamp} coordinate={alert.coords} >
-          //     <AlertMarkerContainer alert={alert} />
-          //    </Marker>
-          //   )
-          // })}
-        }
+
+          <Marker coordinate={currentCoord}></Marker>
+          {this.props.alerts.map(alert => {
+            return (
+             <Marker key={alert.timestamp} coordinate={alert.coords} >
+              <AlertMarkerContainer alert={alert} />
+             </Marker>
+            )
+          })}
+
         </MapView>
         </View>
     )
