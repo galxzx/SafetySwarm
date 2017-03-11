@@ -12,18 +12,43 @@ import {
   Text,
   View
 } from 'react-native'
-import PageOne from './components/PageOne'
-import Map from './components/Map'
+
+import MapContainer from './containers/MapContainer'
+import LoginContainer from './containers/LoginContainer'
+import store from './reducers/store'
+import { setCurrentPosition } from './reducers/maps'
+import { Provider } from 'react-redux'
+
 
 export default class Swarm extends Component {
+
+   componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        store.dispatch(setCurrentPosition(position))
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      store.dispatch(setCurrentPosition(position))
+    });
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
   render() {
     return (
-      <Router>
-        <Scene key="root">
-          <Scene key="pageOne" component={PageOne} title="Page One" initial={true} />
-          <Scene key="Map" component={Map} title="Map" />
-        </Scene>
-      </Router>
+      <Provider store={store} >
+        <Router>
+          <Scene key="root">
+            <Scene key="Login" component={LoginContainer} title="Login"  />
+            <Scene key="SwarmMap" component={MapContainer} title="Swarm Map" initial={true} />
+          </Scene>
+        </Router>
+      </Provider>
     )
   }
 }

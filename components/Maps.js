@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { AppRegistry, View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import  MapView  from 'react-native-maps'
+import  MapView, {Marker}  from 'react-native-maps'
+import AlertMarkerContainer from '../containers/AlertMarkerContainer'
 
 const {height, width} = Dimensions.get('window')
 
-
+const aspectRatio = width / height;
 
 
 const styles = StyleSheet.create({
      container: {
         ...StyleSheet.absoluteFillObject,
-       height: height / 3 * 2,
+       height: height,
        width: width,
        justifyContent: 'flex-end',
        alignItems: 'center',
@@ -46,19 +47,36 @@ const styles = StyleSheet.create({
 
 export default class SwarmMap extends Component {
 
-
   render() {
+    debugger
+    console.log('props', this.props)
+    const latitude = this.props.currentPosition.coords.latitude
+    const longitude = this.props.currentPosition.coords.longitude
+    const currentCoord = {latitude, longitude}
+    console.log(this.props.currentPosition.coords)
+    console.log("time", this.props.alerts[0].timestamp, this.props.currentPosition.timestamp)
 
     return (
       <View style={styles.container}>
         <MapView style={styles.map}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.0062,
+            longitudeDelta: 0.0062/aspectRatio,
             }}
+            key={this.props.currentPosition.timestamp}
         >
+        {
+          // <Marker coordinate={currentCoord}></Marker>
+          // {this.props.alerts.map(alert => {
+          //   return (
+          //    <Marker key={alert.timestamp} coordinate={alert.coords} >
+          //     <AlertMarkerContainer alert={alert} />
+          //    </Marker>
+          //   )
+          // })}
+        }
         </MapView>
         </View>
     )
