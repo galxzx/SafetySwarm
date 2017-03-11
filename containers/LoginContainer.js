@@ -12,7 +12,7 @@ const mapState = () => ({})
 const mapDispatch = (dispatch) => {
   return {
     onSubmitEditing (event) {
-      dispatch(setCodeName(event.nativeEvent.text))
+      dispatch(saveCodeName(event.nativeEvent.text))
       Actions.SwarmMap()
     }
   }

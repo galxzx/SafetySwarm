@@ -39,14 +39,14 @@ const reducer = (state=initialState, action) => {
 export const saveCodeName = (codename) => (dispatch, getState)=>{
 
   dispatch(setCodeName(codename))
-  // const state = getState()
-  // const deviceId = DeviceInfo.getUniqueID()
-  // const lat = state.maps.currentPosition.coords.latitude
-  // const long = state.maps.currentPosition.coords.longitude
-  // const AStore = AsyncStorage.setItem('codename', codename, ()=> console.log('something'))
-  // const saveDB = axios.post('http://10.0.2.2:1337/users', {deviceId, lat, long })
-  // Promise.all([AStore, saveDB])
-  //   .catch(err=>console.error(err))
+  const state = getState()
+  const deviceId = DeviceInfo.getUniqueID()
+  const lat = state.maps.currentPosition.coords.latitude
+  const long = state.maps.currentPosition.coords.longitude
+  const AStore = AsyncStorage.setItem('codename', codename, ()=> console.log('something'))
+  const saveDB = axios.post('http://10.0.2.2:1337/users', {deviceId, lat, long })
+  Promise.all([AStore, saveDB])
+    .catch(err=>console.error(err))
 }
 
 
