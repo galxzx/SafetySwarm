@@ -3,6 +3,7 @@ import { AppRegistry, View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import  MapView, {Marker}  from 'react-native-maps'
 import AlertMarkerContainer from '../containers/AlertMarkerContainer'
+import TabBar from './TabBar'
 
 const {height, width} = Dimensions.get('window')
 
@@ -12,8 +13,9 @@ const aspectRatio = width / height;
 const styles = StyleSheet.create({
      container: {
         ...StyleSheet.absoluteFillObject,
-       height: height,
+       height: height-100,
        width: width,
+       flex: 5,
        justifyContent: 'flex-end',
        alignItems: 'center',
      },
@@ -56,28 +58,33 @@ export default class SwarmMap extends Component {
     console.log("time", this.props.alerts[0].timestamp, this.props.currentPosition.timestamp)
 
     return (
-      <View style={styles.container}>
-        <MapView style={styles.map}
-          initialRegion={{
-            latitude: latitude,
-            longitude: longitude,
-            latitudeDelta: 0.0062,
-            longitudeDelta: 0.0062/aspectRatio,
-            }}
-            key={this.props.currentPosition.timestamp}
-        >
+      <View style={{flex:1, flexDirection:"column", marginTop: 60}}>
+        <View style={styles.container}>
+          <MapView style={styles.map}
+            initialRegion={{
+              latitude: latitude,
+              longitude: longitude,
+              latitudeDelta: 0.0062,
+              longitudeDelta: 0.0062/aspectRatio,
+              }}
+              key={this.props.currentPosition.timestamp}
+          >
 
-          <Marker coordinate={currentCoord}></Marker>
-          {this.props.alerts.map(alert => {
-            return (
-             <Marker key={alert.timestamp} coordinate={alert.coords} >
-              <AlertMarkerContainer alert={alert} />
-             </Marker>
-            )
-          })}
+            <Marker coordinate={currentCoord}></Marker>
+            {this.props.alerts.map(alert => {
+              return (
+               <Marker key={alert.timestamp} coordinate={alert.coords} >
+                <AlertMarkerContainer alert={alert} />
+               </Marker>
+              )
+            })}
 
-        </MapView>
+          </MapView>
         </View>
+
+        <TabBar />
+
+      </View>
     )
   }
 }

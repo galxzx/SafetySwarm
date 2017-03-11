@@ -5,22 +5,37 @@
  */
 
 import React, { Component } from 'react';
-import {Router, Scene} from 'react-native-router-flux'
+import {Router, Scene, Actions, Switch, TabBar} from 'react-native-router-flux'
 import {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   Text,
   View
 } from 'react-native'
 
+
 import MapContainer from './containers/MapContainer'
 import LoginContainer from './containers/LoginContainer'
+import AlertFormContainer from './containers/AlertFormContainer'
 import store from './reducers/store'
 import { setCurrentPosition } from './reducers/maps'
-import { Provider } from 'react-redux'
+import { setCodeName } from './reducers/login'
+import { Provider, connect } from 'react-redux'
 
 
 export default class Swarm extends Component {
+
+  componentWillMount() {
+    console.log('entered onEnter')
+    AsyncStorage.getItem('codename')
+      .then(codename => {
+        if(codename) {
+          store.dispatch(setCodeName(codename))
+        }
+      })
+      .catch(err => console.error(err))
+  }
 
    componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -29,23 +44,28 @@ export default class Swarm extends Component {
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+    )
     this.watchID = navigator.geolocation.watchPosition((position) => {
       store.dispatch(setCurrentPosition(position))
-    });
+    })
   }
 
   componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
+    navigator.geolocation.clearWatch(this.watchID)
   }
+
+            // component={connect(state =>({codename: state.codename}))(Switch)}
+            // selector={props=>props.codename ? 'sandbox' : 'Login'}
+
 
   render() {
     return (
       <Provider store={store} >
-        <Router>
+        <Router >
           <Scene key="root">
-            <Scene key="Login" component={LoginContainer} title="Login"  />
-            <Scene key="SwarmMap" component={MapContainer} title="Swarm Map" initial={true} />
+              <Scene key="Login" component={LoginContainer} title="Login"  />
+              <Scene key="SwarmMap" component={MapContainer} title="Swarm Map" />
+              <Scene key="sandbox" component={AlertFormContainer} title="Send Alert" codename="space patrol" initial={true} />
           </Scene>
         </Router>
       </Provider>
