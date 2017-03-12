@@ -13,7 +13,7 @@ import {
   Text,
   View
 } from 'react-native'
-
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 import MapContainer from './containers/MapContainer'
 import LoginContainer from './containers/LoginContainer'
@@ -38,6 +38,10 @@ export default class Swarm extends Component {
   }
 
    componentDidMount() {
+     FCM.getFCMToken().then(token => {
+            console.log('token', token)
+            // store fcm token in your server
+        })
     navigator.geolocation.getCurrentPosition(
       (position) => {
         store.dispatch(setCurrentPosition(position))

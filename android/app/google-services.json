@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "45360379860",
+    "firebase_url": "https://safetyswarm.firebaseio.com",
+    "project_id": "safetyswarm",
+    "storage_bucket": "safetyswarm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45360379860:android:0e3e91f2715fd065",
+        "android_client_info": {
+          "package_name": "com.swarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45360379860-j8ic7e36pt6p7dv7llet338nrs0de5kq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQxTqVI1sk50_G56nWIS_ngUQphqJ5frw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
