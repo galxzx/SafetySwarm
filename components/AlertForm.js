@@ -5,17 +5,17 @@ import TabBar from './TabBar'
 
 const AlertForm = ({onCodeNameChange, onMessageChange, codename, onSubmit}) => {
   return (
-    <View style={{marginTop: 80, flex:1, flexDirection:"column"}}>
-      <View style={{flex:5}}>
+    <View style={{marginTop: 50, flex:1, flexDirection:"column", backgroundColor:"lightgray"}}>
+      <View style={{flex:5, margin:10}}>
         <View>
-          <Text>Code Name </Text>
+          <Text style={{fontWeight:"bold"}} >Code Name </Text>
           <TextInput onChangeText={onCodeNameChange} defaultValue={codename}/>
         </View>
         <View>
-          <Text> Message </Text>
+          <Text style={{fontWeight:"bold"}} > Message </Text>
           <TextInput onChangeText={onMessageChange} maxLength={200} />
         </View>
-        <Button style={{backgroundColor:"blue", color:"red"}}
+        <Button color="darkred"
           onPress={onSubmit} title="Send Alert">
         </Button>
       </View>

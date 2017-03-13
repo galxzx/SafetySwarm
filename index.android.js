@@ -16,12 +16,15 @@ import {
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import DeviceInfo from 'react-native-device-info'
 
+import AlertSent from './components/AlertSent'
+
 import MapContainer from './containers/MapContainer'
 import LoginContainer from './containers/LoginContainer'
 import AlertFormContainer from './containers/AlertFormContainer'
 import store from './reducers/store'
-import { setCurrentPosition } from './reducers/maps'
+import { setCurrentPosition, getAlerts, addAlert } from './reducers/maps'
 import { setCodeName, registerDevice } from './reducers/login'
+
 
 import { Provider, connect } from 'react-redux'
 
@@ -61,13 +64,36 @@ export default class Swarm extends Component {
     )
     })
      .catch(err => console.log('Something went wrong', err))
+
     this.watchID = navigator.geolocation.watchPosition((position) => {
       store.dispatch(setCurrentPosition(position))
+      store.dispatch(getAlerts())
     })
-  }
+
+     this.notificationListener = FCM.on(FCMEvent.Notification,  (notif) => {
+            // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
+            if(notif.local_notification){
+              //this is a local notification
+            }
+            if(notif.opened_from_tray){
+              //app is open/resumed because user clicked banner
+              store.dispatch(addAlert(JSON.parse(notif.alert)))
+              console.log("notif", notif)
+              store.dispatch(getAlerts())
+              Actions.SwarmMap();
+            }
+        });
+        this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, (token) => {
+            console.log(token)
+            // fcm token may not be available on first load, catch it here
+        });
+    }
+
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID)
+     this.notificationListener.remove();
+    this.refreshTokenListener.remove();
   }
 
 
@@ -79,10 +105,11 @@ export default class Swarm extends Component {
     return (
       <Provider store={store} >
         <Router >
-          <Scene key="root" >
-              <Scene key="Login" component={LoginContainer} title="Login" initial={true} />
-              <Scene key="SwarmMap" component={MapContainer} title="Swarm Map" />
-              <Scene key="sandbox" component={AlertFormContainer} title="Send Alert"   />
+          <Scene key="root" navigationBarStyle={{backgroundColor:"#434a56"}} >
+              <Scene sceneStyle={{backgroundColor:"lightgray"}} key="Login" component={LoginContainer} title="Login" initial={true} titleStyle={{color:"white"}} />
+              <Scene key="SwarmMap" component={MapContainer} title="Swarm Map" titleStyle={{color:"white"}} />
+              <Scene key="sandbox" component={AlertFormContainer} title="Send Alert" titleStyle={{color:"white"}}  />
+              <Scene key="alertSent" title="Alert Sent" component={AlertSent} titleStyle={{color:"white"}} />
           </Scene>
         </Router>
       </Provider>

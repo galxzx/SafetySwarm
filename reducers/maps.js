@@ -41,11 +41,12 @@ const reducer = (state=initialState, action) => {
       break
 
     case ADD_ALERT:
-      newState.alerts = state.alerts.slice().push(action.alert)
+      console.log('alerts', newState.alerts.slice())
       break
     default:
       return state
   }
+  console.log('newState', newState)
   return newState;
 
 }
@@ -58,6 +59,7 @@ export const getAlerts = () => (dispatch, getState) => {
     .then(alerts => {
       dispatch(setAlerts(alerts))
     })
+    .catch(err => console.error(err))
 }
 
 

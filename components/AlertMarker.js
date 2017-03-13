@@ -5,9 +5,9 @@ const AlertMarker = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.bubble}>
-        <Text> &lt; </Text>
-        <Text>{props.age}</Text>
-        <Text> Min</Text>
+        <Text style={{fontWeight:"bold", fontSize:18}}> &lt; </Text>
+        <Text style={{fontWeight:"bold", fontSize:18}}>{props.age}</Text>
+        <Text style={{fontWeight:"bold", fontSize:18}}> Min</Text>
       </View>
       <View style={styles.arrowBorder} />
         <View style={styles.arrow} />

@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import { connect } from 'react-redux'
 import AlertForm from '../components/AlertForm'
 import axios from 'axios'
+import { Actions } from 'react-native-router-flux'
 
 
 const mapState = (state) => {
@@ -37,7 +38,9 @@ class AlertFormContainer extends Component {
   }
 
   onSubmit() {
+
     axios.post('http://10.0.2.2:1337/alerts', Object.assign({}, this.props, this.state))
+    .then(res => Actions.alertSent())
   }
 
   render () {

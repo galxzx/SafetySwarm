@@ -72,7 +72,7 @@ export default class SwarmMap extends Component {
 
             <Marker coordinate={currentCoord}></Marker>
             {this.props.alerts.map(alert => {
-              console.log('alert', alert)
+
               let coords = {
                 latitude: alert.lat,
                 longitutde: alert.long
