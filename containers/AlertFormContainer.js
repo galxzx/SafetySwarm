@@ -9,13 +9,15 @@ const mapState = (state) => {
   console.log('state?', state)
   return {
     lat: state.maps.currentPosition.coords.latitude,
-    long: state.maps.currentPosition.coords.longitude
+    long: state.maps.currentPosition.coords.longitude,
+    codename: state.codename.codename
   }
 }
 
-export class AlertFormContainer extends Component {
+class AlertFormContainer extends Component {
   constructor(props){
     super()
+    console.log('constructor props', props)
     this.state={
       codename:props.codename,
       message: ""
@@ -35,10 +37,11 @@ export class AlertFormContainer extends Component {
   }
 
   onSubmit() {
-    axios.post('http://10.0.2.2:1337/alerts', Object.assign({}, this.state, this.props))
+    axios.post('http://10.0.2.2:1337/alerts', Object.assign({}, this.props, this.state))
   }
 
   render () {
+    console.log('props', this.props)
     return (
       <AlertForm {...this.props} onCodeNameChange={this.onCodeNameChange} onMessageChange={this.onMessageChange} onSubmit={this.onSubmit} />
     )

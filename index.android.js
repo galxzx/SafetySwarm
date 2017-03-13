@@ -80,9 +80,9 @@ export default class Swarm extends Component {
       <Provider store={store} >
         <Router >
           <Scene key="root" >
-              <Scene key="Login" component={LoginContainer} title="Login"  />
+              <Scene key="Login" component={LoginContainer} title="Login" initial={true} />
               <Scene key="SwarmMap" component={MapContainer} title="Swarm Map" />
-              <Scene key="sandbox" component={AlertFormContainer} title="Send Alert" codename="space patrol" initial={true} />
+              <Scene key="sandbox" component={AlertFormContainer} title="Send Alert"   />
           </Scene>
         </Router>
       </Provider>

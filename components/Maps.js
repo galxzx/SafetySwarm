@@ -78,7 +78,7 @@ export default class SwarmMap extends Component {
                 longitutde: alert.long
               }
               return (
-               <Marker key={alert.id} coordinate={{longitude: alert.long, latitude:alert.lat}} >
+               <Marker key={alert.id} coordinate={{longitude: alert.long, latitude:alert.lat}} title={`codename: ${alert.codename}`} description={alert.message} >
                 <AlertMarkerContainer alert={alert} />
                </Marker>
               )

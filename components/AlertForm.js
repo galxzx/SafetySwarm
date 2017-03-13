@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import {View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-native'
+import {View, Text, TouchableHighlight, TextInput, StyleSheet, Button } from 'react-native'
 import TabBar from './TabBar'
+
 
 const AlertForm = ({onCodeNameChange, onMessageChange, codename, onSubmit}) => {
   return (
@@ -14,10 +15,9 @@ const AlertForm = ({onCodeNameChange, onMessageChange, codename, onSubmit}) => {
           <Text> Message </Text>
           <TextInput onChangeText={onMessageChange} maxLength={200} />
         </View>
-        <TouchableHighlight
-          onPress={onSubmit}>
-          <Text>Send Alert</Text>
-        </TouchableHighlight>
+        <Button style={{backgroundColor:"blue", color:"red"}}
+          onPress={onSubmit} title="Send Alert">
+        </Button>
       </View>
       <TabBar />
     </View>

@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 //------------Actions ----------//
 
 const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
@@ -49,10 +51,12 @@ const reducer = (state=initialState, action) => {
 }
 
 //-------dispatchers--------//
-export const getAlerts = (lat, long) => dispatch => {
-  axios.get(`http://10.0.2.2:1337/alerts?lat=${lat}&long=${long}`)
+export const getAlerts = () => (dispatch, getState) => {
+    let currentPosition = getState().maps.currentPosition
+  return axios.get(`http://10.0.2.2:1337/alerts?lat=${currentPosition.coords.latitude}&long=${currentPosition.coords.longitude}`)
+    .then(res => res.data)
     .then(alerts => {
-      dispatch(setAlerts)
+      dispatch(setAlerts(alerts))
     })
 }
 
