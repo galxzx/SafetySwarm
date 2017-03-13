@@ -71,15 +71,15 @@ export default class Swarm extends Component {
   }
 
 
-
+// component={connect(state =>({codename: state.codename}))(Switch)}
+//             tabs={true}
+//             selector={props=>props.codename ? 'sandbox' : 'Login'}
 
   render() {
     return (
       <Provider store={store} >
         <Router >
-          <Scene key="root" component={connect(state =>({codename: state.codename}))(Switch)}
-            tabs={true}
-            selector={props=>props.codename ? 'sandbox' : 'Login'}>
+          <Scene key="root" >
               <Scene key="Login" component={LoginContainer} title="Login"  />
               <Scene key="SwarmMap" component={MapContainer} title="Swarm Map" />
               <Scene key="sandbox" component={AlertFormContainer} title="Send Alert" codename="space patrol" initial={true} />

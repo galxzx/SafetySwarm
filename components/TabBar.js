@@ -9,7 +9,9 @@ import { Actions } from 'react-native-router-flux'
 const TabBar = () => {
   return (
     <View style={{ position:'absolute', left:0, right:0, bottom:0, height:50, flexDirection:"row", justifyContent:"center"}} >
-      <Button style={{height:50}} title="Login" onPress={() => Actions.Login()} >Login</Button>
+      <Button style={{height:50}} title="Login" onPress={() =>{
+        console.log('pressd Login')
+        Actions.Login()}} >Login</Button>
       <Button  style={{height:50}} title="Map" onPress={() => Actions.SwarmMap()}>Map</Button>
       <Button  style={{height:50}}  title="Alert" onPress={() => Actions.sandbox()}>Alert</Button>
     </View>

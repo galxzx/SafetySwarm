@@ -55,7 +55,7 @@ export default class SwarmMap extends Component {
     const longitude = this.props.currentPosition.coords.longitude
     const currentCoord = {latitude, longitude}
     console.log(this.props.currentPosition.coords)
-    console.log("time", this.props.alerts[0].timestamp, this.props.currentPosition.timestamp)
+
 
     return (
       <View style={{flex:1, flexDirection:"column", marginTop: 60}}>
@@ -72,8 +72,13 @@ export default class SwarmMap extends Component {
 
             <Marker coordinate={currentCoord}></Marker>
             {this.props.alerts.map(alert => {
+              console.log('alert', alert)
+              let coords = {
+                latitude: alert.lat,
+                longitutde: alert.long
+              }
               return (
-               <Marker key={alert.timestamp} coordinate={alert.coords} >
+               <Marker key={alert.id} coordinate={{longitude: alert.long, latitude:alert.lat}} >
                 <AlertMarkerContainer alert={alert} />
                </Marker>
               )
