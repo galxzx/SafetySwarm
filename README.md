@@ -9,3 +9,4 @@ The app was developed using React Native and utilizes a separate Node.js, Expres
 
 Safety Swarm also utilizes the Google Maps API and Google Firebase FCM for notifications. 
 
+The server for use with the app is located at https://github.com/galxzx/swarm-server
